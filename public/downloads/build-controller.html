@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Build LAST LIGHT's Arduino Uno joystick and LOW / MEDIUM / HIGH controller. Complete pin map, printable circuit, upload and calibration instructions.">
+<title>Build the controller — LAST LIGHT</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#192c39;background:#edf0f2;font-synthesis:none;line-height:1.6}
+*{box-sizing:border-box}body{margin:0}a{color:#245c76;text-underline-offset:3px}a:focus-visible,button:focus-visible{outline:3px solid #bd7730;outline-offset:4px}
+.toolbar{max-width:1160px;margin:0 auto;padding:22px 26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}.brand{font-size:13px;font-weight:800;letter-spacing:.16em;margin-right:auto}.toolbar a{font-size:14px}.toolbar button{font:700 14px Arial,sans-serif;background:#192c39;border:1px solid #192c39;color:white;border-radius:7px;padding:12px 17px;cursor:pointer;min-height:44px}
+main{background:white;max-width:1160px;margin:0 auto 50px;padding:54px 66px 60px;border:1px solid #d6dfe4;border-radius:12px;box-shadow:0 8px 30px #152c390a}
+h1{font-size:clamp(28px,4vw,45px);letter-spacing:-1.1px;line-height:1.15;margin:0 0 24px;color:#122a38}h2{font-size:25px;letter-spacing:-.45px;line-height:1.25;border-top:1px solid #d9e2e7;padding-top:30px;margin:40px 0 18px}p{margin:0 0 18px}strong{font-weight:700}li{padding-left:3px;margin-bottom:11px}ol,ul{padding-left:25px}li>p{margin-bottom:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5;margin:22px 0 26px;overflow-wrap:anywhere}th,td{border:1px solid #d4dee4;padding:11px 13px;text-align:left;vertical-align:top}th{background:#eef3f6;font-size:12px;letter-spacing:.035em}tr:nth-child(even) td{background:#f9fafb}
+pre{background:#152b38;color:#edf4f7;border-radius:6px;padding:18px 20px;line-height:1.7;overflow:auto;font-size:13px}code{font-family:Consolas,'Courier New',monospace;font-size:.91em;background:#edf2f5;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}pre code{background:transparent;padding:0;color:inherit}
+.circuit{margin:50px -36px 0;border-top:1px solid #d9e2e7;padding-top:28px}.circuit h2{border:0;padding:0;margin:0 0 8px 36px}.circuit>p{margin-left:36px;font-size:14px;color:#526571}.diagram-frame{overflow:auto;border:1px solid #d9e2e7;border-radius:6px}.diagram-frame svg{display:block;width:100%;min-width:680px;height:auto}.footer{margin:34px 0 0;font-size:12px;color:#61717c}
+@media(max-width:680px){.toolbar{padding:16px;gap:12px}.brand{flex-basis:100%}main{padding:32px 20px;border-left:0;border-right:0;border-radius:0;margin-bottom:0}h2{font-size:22px}table{font-size:12px}th,td{padding:8px 7px}.circuit{margin:40px 0 0}.circuit h2,.circuit>p{margin-left:0}pre{padding:14px;font-size:12px}}
+@page{size:A4;margin:15mm}
+@page diagram{size:A4 landscape;margin:8mm}
+@media print{:root{background:white;font-size:10pt;line-height:1.45}.toolbar{display:none}body{margin:0}main{border:0;box-shadow:none;border-radius:0;margin:0;padding:0;max-width:none}h1{font-size:26pt;letter-spacing:-.6pt}h2{font-size:15pt;margin-top:20pt;padding-top:14pt;break-after:avoid}p,li{orphans:3;widows:3}p{margin-bottom:10pt}li{margin-bottom:7pt}table{font-size:8.5pt;line-height:1.4;margin:12pt 0}thead{display:table-header-group}tr{break-inside:avoid}th,td{padding:6pt}th{font-size:8pt;background:#eee!important}pre{white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid;background:#f0f3f5!important;color:#132936!important;border:1px solid #ced6dc;font-size:8.5pt;padding:10pt}a{color:inherit}a[href^="https:"]{text-decoration:underline}code{font-size:9pt}.circuit{page:diagram;break-before:page;break-after:page;margin:0;padding:0;border:0}.circuit h2,.circuit>p{display:none}.diagram-frame{border:0;overflow:visible}.diagram-frame svg{min-width:0;width:100%;height:190mm;max-height:190mm}.footer{display:none}}
+</style>
+</head>
+<body>
+<nav class="toolbar" aria-label="Controller downloads"><span class="brand">LAST LIGHT / CONTROLLER KIT</span><a href="LastLight/LastLight.ino" download="LastLight.ino">Arduino sketch</a><a href="wiring.svg" download="wiring.svg">Circuit SVG</a><a href="SERIAL_PROTOCOL.md">Serial protocol</a><button type="button" onclick="window.print()">Print build guide</button></nav>
+<main>
+<h1>Build your LAST LIGHT controller</h1>
+<p>Start with <strong>one Arduino Uno R3, one analog joystick, and one 10 kΩ linear potentiometer</strong>. That is enough to play with physical controls. The sketch is ready to upload with the optional LED bar and LCD disabled.</p>
+<p><strong>Open the sketch:</strong> in the controller ZIP, open <code>LastLight/LastLight.ino</code>. In the full game project, open <code>arduino/LastLight/LastLight.ino</code>. Keep the <code>.ino</code> file inside its <code>LastLight</code> folder.</p>
+<p><strong>Open the circuit:</strong> <a href="wiring.svg">wiring.svg</a>. It is a printable electrical wiring diagram; the module boxes do not indicate the physical order of pins.</p>
+<h2>1. Gather the parts</h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Part</th>
+<th>What to choose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Arduino Uno R3</td>
+<td>ATmega328P, 5 V, with a USB data cable suitable for its USB connector</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Two-axis analog joystick module</td>
+<td>Labelled VCC/+5V, GND, VRx, VRy, SW; verify it supports 5 V</td>
+</tr>
+<tr>
+<td>1</td>
+<td>10 kΩ linear potentiometer + knob</td>
+<td>Three terminals; confirm which is the wiper</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Breadboard</td>
+<td>Check whether its power rails are split</td>
+</tr>
+<tr>
+<td>About 20</td>
+<td>Jumper wires</td>
+<td>Correct male/female ends for your modules</td>
+</tr>
+<tr>
+<td>Optional</td>
+<td>Momentary normally-open pushbutton</td>
+<td>Only needed if your joystick has no press switch</td>
+</tr>
+<tr>
+<td>Optional</td>
+<td>Ten individual indicator LEDs</td>
+<td>Known polarity and low-current ratings; these can form a simple reserve bar</td>
+</tr>
+<tr>
+<td>10 if using LEDs</td>
+<td>2.2 kΩ resistors, ¼ W</td>
+<td>One resistor for every LED; never one shared resistor</td>
+</tr>
+<tr>
+<td>Optional</td>
+<td>16 × 2 HD44780 LCD with supported I2C backpack</td>
+<td>Verified 5 V module; requires the optional library and firmware switch below</td>
+</tr>
+</tbody></table>
+<p>The existing LED bar&#39;s model is unknown, so <strong>leave it disconnected for the first build</strong>. Ten separate LEDs are a supported alternative. Do not infer a bar&#39;s pinout from its shape or assume an addressable module is a bare LED array.</p>
+<h2>2. Wire the basic controller with USB unplugged</h2>
+<p>Connect the Uno&#39;s <strong>5V</strong> output to the breadboard positive rail and <strong>GND</strong> to the ground rail. Use those rails for the joystick and potentiometer. Every ground in the circuit must join the Uno&#39;s GND. Leave VIN, 3.3V, AREF, D0, and D1 unconnected in this build.</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Joystick VCC / +5V</td>
+<td>Uno 5V rail</td>
+<td>Joystick supply</td>
+</tr>
+<tr>
+<td>Joystick GND</td>
+<td>Uno GND rail</td>
+<td>Shared reference</td>
+</tr>
+<tr>
+<td>Joystick VRx</td>
+<td>Uno A0</td>
+<td>Horizontal movement</td>
+</tr>
+<tr>
+<td>Joystick VRy</td>
+<td>Uno A1</td>
+<td>Vertical movement</td>
+</tr>
+<tr>
+<td>Joystick SW</td>
+<td>Uno D2</td>
+<td>Press action; switch closes to GND</td>
+</tr>
+<tr>
+<td>Pot outer terminal 1</td>
+<td>Uno 5V rail</td>
+<td>One end of knob travel</td>
+</tr>
+<tr>
+<td>Pot outer terminal 2</td>
+<td>Uno GND rail</td>
+<td>Other end of knob travel</td>
+</tr>
+<tr>
+<td>Pot wiper / usual middle terminal</td>
+<td>Uno A2</td>
+<td>Knob reading</td>
+</tr>
+<tr>
+<td>Uno USB</td>
+<td>Computer USB</td>
+<td>Power and serial data</td>
+</tr>
+</tbody></table>
+<p>The D2 switch uses the Uno&#39;s internal pull-up. It is HIGH when released and LOW when pressed; no external button resistor is needed for this simple circuit. If using a separate button, wire it between <strong>D2 and GND</strong>. On a four-leg tactile button, use contacts that are open when released and connected when pressed; verify the pairs. <a href="https://docs.arduino.cc/built-in-examples/digital/InputPullupSerial/">Arduino pull-up example</a>.</p>
+<p>This is a <strong>5 V Uno R3</strong> design. Do not connect 5 V signals to a different board without checking that board&#39;s limits. The baseline is powered only by USB; do not add a battery or external supply. Arduino documents the Uno&#39;s USB power and labelled power/analog connectors in its <a href="https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf">Uno R3 manual</a>. The potentiometer arrangement follows Arduino&#39;s <a href="https://github.com/arduino/arduino-examples/blob/main/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino">AnalogReadSerial example</a>.</p>
+<p>Before plugging in USB, check that 5V and GND are not accidentally joined, the potentiometer wiper goes only to A2, and no bare leads touch neighbouring terminals. Never move wires while powered.</p>
+<h2>3. Upload the supplied Arduino code</h2>
+<ol>
+<li>Install <a href="https://www.arduino.cc/en/software/">Arduino IDE</a> and the <strong>Arduino AVR Boards</strong> package while online.</li>
+<li>Open the supplied <code>LastLight.ino</code> sketch. Leave these settings at the top unchanged for the first test:</li>
+</ol>
+<pre><code class="language-cpp">#define LASTLIGHT_LED_MODE 0
+#define LASTLIGHT_LED_SEGMENTS 10
+#define LASTLIGHT_LED_ACTIVE_LOW 0
+#define LASTLIGHT_LCD_ENABLED 0
+</code></pre>
+<ol start="3">
+<li>Connect the Uno with a <strong>data-capable</strong> USB cable. Select <strong>Arduino Uno</strong> and its actual COM port in the IDE, then click <strong>Upload</strong>. No additional library is required for the basic controller.</li>
+<li>Open Serial Monitor at <strong>115200 baud</strong>. You should see one JSON line every 40 ms, similar to:</li>
+</ol>
+<pre><code class="language-json">{&quot;joystickX&quot;:512,&quot;joystickY&quot;:508,&quot;potentiometer&quot;:734,&quot;button&quot;:false}
+</code></pre>
+<ol start="5">
+<li>Move the stick, turn the knob, and press/release the stick. The three readings should vary within 0–1023; <code>button</code> should become <code>true</code> while pressed. The Uno&#39;s ADC supplies those raw values; the computer performs calibration and chooses the three power modes.</li>
+<li><strong>Close Serial Monitor before connecting the game.</strong> The IDE and Node cannot use the same serial port together.</li>
+</ol>
+<p>Optional Arduino CLI commands, from the full project folder:</p>
+<pre><code class="language-text">arduino-cli compile --fqbn arduino:avr:uno arduino/LastLight
+arduino-cli upload --fqbn arduino:avr:uno -p COM4 arduino/LastLight
+</code></pre>
+<p>Replace <code>COM4</code> with your board&#39;s port. These commands compile/upload only when you run them; no board was flashed while preparing this package.</p>
+<h2>4. Start the local game and connect it</h2>
+<p><strong>The public Vercel website does not read this Arduino.</strong> Its online play uses browser controls. To use USB hardware, run the full LAST LIGHT project on the same computer as the Uno. The controller ZIP contains firmware and build instructions, not the complete Node game.</p>
+<p>Install Node.js 22 LTS, then open PowerShell in the full game folder containing <code>package.json</code>:</p>
+<pre><code class="language-powershell">npm install
+npm run build
+npm start
+</code></pre>
+<p>Open <strong><a href="http://127.0.0.1:3001">http://127.0.0.1:3001</a></strong>. The terminal must remain running. Dependency installation needs internet once; normal local play needs no CDN, web fonts, or online audio. On Windows, the full project&#39;s <code>scripts/start-exhibition.ps1</code> is an alternative launcher.</p>
+<p>Open <strong>Organizer → Controller</strong>, refresh ports, choose the Uno&#39;s COM port, and click <strong>Connect</strong>. Allow about two seconds for the Uno to reset and begin sending packets. You should see the raw hardware values update. If Organizer has no Controller tab, you have opened the public hosted page instead of the local game.</p>
+<p>Click or press a key in the game browser once during setup to enable audio before hardware-only play. Local event scores are stored on that computer and are separate from the public online leaderboard.</p>
+<h2>5. Calibrate and label LOW / MEDIUM / HIGH</h2>
+<ol>
+<li>Leave the joystick at rest. In Organizer, use <strong>Capture resting centre</strong> or enter its observed center X/Y values. Start with a deadzone of <strong>80</strong>.</li>
+<li>Turn the knob fully to its LOW end and enter the observed <strong>KNOB MINIMUM</strong>. Turn fully to HIGH and enter <strong>KNOB MAXIMUM</strong>. They must be ordered and at least 100 ADC counts apart.</li>
+<li>Click <strong>Save calibration</strong>, close Organizer, then start or resume practice. Calibration edits do not apply until saved, and the cursor does not move while Organizer pauses the game.</li>
+<li>In practice, check all map directions and turn the knob through <strong>LOW</strong>, <strong>MEDIUM</strong>, and <strong>HIGH</strong>. The local bridge maps roughly the first third of travel to LOW, the middle third to MEDIUM, and the last third to HIGH. A small hysteresis band makes the boundaries stable. There is no OFF position and no need to label percentages on the knob.</li>
+<li>If adjustments are needed, reopen Organizer. Increase deadzone only if the cursor drifts while released; use <strong>Invert Y</strong> if vertical movement is reversed. Reorient the joystick physically if horizontal direction is reversed; do not swap the module&#39;s VCC and GND pins. If the knob runs backwards, unplug USB and swap <strong>only the potentiometer&#39;s two outer wires</strong>; leave its wiper at A2. Reconnect and measure its endpoints again. Save calibration, close Organizer, and repeat the practice check.</li>
+<li>Place LOW / MEDIUM / HIGH marks on the panel using the actual on-screen changes. A continuous potentiometer is expected; a three-position switch is not the same circuit.</li>
+</ol>
+<p>Use the guided practice: select the highlighted homes, choose <strong>MEDIUM</strong>, keep the connection matched, then choose <strong>LOW</strong>. Press the joystick button after practice completes to start a scored shift. During a live shift, connections secure automatically while the selected service receives enough power; the joystick button does not pause or reset the game. At ready/results it enters practice; when paused it resumes. The first movement or press during the idle demo only wakes the game.</p>
+<h2>6. Add a known LED reserve bar later</h2>
+<p>The easiest supported bar uses <strong>ten separate LEDs</strong>. Keep USB unplugged while adding them.</p>
+<p>For each branch, wire <strong>Uno output → 2.2 kΩ resistor → LED anode</strong>, then <strong>LED cathode → GND</strong>. For separate through-hole LEDs, identify polarity from their datasheet/markings or diode test; trimmed leads can make length unreliable. Do not apply these pin assumptions to an unidentified bar module.</p>
+<table>
+<thead>
+<tr>
+<th>LED / segment</th>
+<th>Uno output</th>
+<th>Series resistor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1, first to light</td>
+<td>D3</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>2</td>
+<td>D4</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>3</td>
+<td>D5</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>4</td>
+<td>D6</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>5</td>
+<td>D7</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>6</td>
+<td>D8</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>7</td>
+<td>D9</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>8</td>
+<td>D10</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>9</td>
+<td>D11</td>
+<td>2.2 kΩ</td>
+</tr>
+<tr>
+<td>10, last to light</td>
+<td>D12</td>
+<td>2.2 kΩ</td>
+</tr>
+</tbody></table>
+<p>Set <code>LASTLIGHT_LED_MODE</code> to <strong>1</strong>, keep ten segments and active-LOW at <strong>0</strong>, and upload again. Arduino&#39;s official Uno pinout lists 20 mA maximum per I/O pin. At 5 V and an LED forward voltage of about 2 V, a 2.2 kΩ resistor gives about <strong>1.36 mA</strong>, or <strong>13.6 mA for ten LEDs</strong>. Actual LED voltage and brightness vary. These resistors intentionally keep the indicator current low; do not use GPIO to power large LED strips. <a href="https://docs.arduino.cc/resources/pinouts/A000066-full-pinout.pdf">Official Uno R3 pinout and limit</a>.</p>
+<p>In Organizer, test <strong>0 / 25 / 50 / 75 / 100</strong>. A ten-LED bar should show <strong>0 / 3 / 5 / 8 / 10</strong> lit segments. The test lasts three seconds, then returns to current reserve. A five-second loss of valid host storage commands blanks the bar. The bar shows stored energy: a 27-building blackout may end a shift while some reserve remains.</p>
+<p>The sketch also supports <strong>two SN74HC595N chips</strong> and known bare LED segments. This is an alternative to direct mode and uses different wiring. Full pin tables, active-LOW variants, and the optional LCD setup are in <a href="HARDWARE.md">HARDWARE.md</a>. Addressable RGB, MY9221, TM1637, and MAX7219 modules need their own supported driver; they are not enabled by selecting mode 1 or 2.</p>
+<h2>Optional I2C LCD</h2>
+<p>For a verified 5 V HD44780-compatible 16 × 2 LCD with a supported I2C backpack: <strong>VCC → 5V, GND → GND, SDA → A4, SCL → A5</strong>. Install <strong>hd44780 by Bill Perry</strong> using Library Manager; run its <code>I2CexpDiag</code> example first. Set <code>LASTLIGHT_LCD_ENABLED</code> to <strong>1</strong>. Address <strong>0</strong> means supported-backpack autodetection; do not assume every display uses <code>0x27</code>. This is not the wiring for a bare parallel LCD. <a href="https://github.com/duinoWitchery/hd44780/blob/master/hd44780ioClass/hd44780_I2Cexp.h">Library&#39;s I2C backpack implementation</a>.</p>
+<p>The local game sends time/power mode on the first line and reserve on the second. The LCD is optional; leave it disabled while testing the basic controller.</p>
+<h2>Quick troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>Check next</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>No COM port</td>
+<td>Use a data cable, another USB port, and the board vendor&#39;s official USB driver if required</td>
+</tr>
+<tr>
+<td>Upload or Connect says port busy</td>
+<td>Close Serial Monitor and disconnect any other program using that port</td>
+</tr>
+<tr>
+<td>JSON is unreadable</td>
+<td>Set Serial Monitor to 115200 baud</td>
+</tr>
+<tr>
+<td>Axis or knob sticks at 0/1023</td>
+<td>Unplug USB; verify shared GND, 5V, and the correct wiper/signal pin</td>
+</tr>
+<tr>
+<td>Pointer drifts</td>
+<td>Measure the actual resting center; increase deadzone slightly</td>
+</tr>
+<tr>
+<td>Wrong knob direction</td>
+<td>Unplug USB; swap the pot&#39;s outer wires only, then recalibrate</td>
+</tr>
+<tr>
+<td>LED bar stays dark</td>
+<td>Default mode 0 intentionally disables it; verify the known circuit before mode 1</td>
+</tr>
+<tr>
+<td>Game switches to keyboard</td>
+<td>Serial data has been stale for more than one second; check cable/port and reconnect</td>
+</tr>
+<tr>
+<td>No Controller tab</td>
+<td>Open the local page at 127.0.0.1:3001, not the hosted Vercel game</td>
+</tr>
+</tbody></table>
+<h2>Verification and remaining physical checks</h2>
+<p>Checked on 13 September 2026 with Arduino AVR Boards 1.8.8 and the official AVR toolchain; LCD build used hd44780 1.3.2:</p>
+<table>
+<thead>
+<tr>
+<th>Actual Uno-target compile</th>
+<th>Flash / 32,256 bytes</th>
+<th>Static RAM / 2,048 bytes</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Default controller; LED/LCD disabled</td>
+<td>4,894</td>
+<td>489</td>
+<td>Passed</td>
+</tr>
+<tr>
+<td>Direct ten-LED mode</td>
+<td>5,094</td>
+<td>500</td>
+<td>Passed</td>
+</tr>
+<tr>
+<td>Two 74HC595s; 16 segments; I2C LCD enabled</td>
+<td>10,808</td>
+<td>870</td>
+<td>Passed</td>
+</tr>
+</tbody></table>
+<p>Five compiled host-side firmware configurations also passed their assertions for packet framing, malformed/oversized input recovery, LED mapping, button debounce, serial backpressure, and timeout blanking. The current server/firmware interface was checked against the three-mode game. These are software checks using simulated I/O plus actual AVR compilation, not electrical or physical performance measurements.</p>
+<p><strong>No physical Uno, joystick, LED bar, or LCD was connected or flashed for these checks.</strong> Before exhibition use, verify polarity, rail continuity, stable LOW/MEDIUM/HIGH selection, all map directions, reconnect behavior, and a complete practice plus scored shift on the real controller.</p>
+
+<section class="circuit" aria-label="Printable controller circuit">
+<h2>Printable circuit layout</h2>
+<p>Print this sheet in landscape. On a narrow screen, scroll the diagram sideways or open the <a href="wiring.svg">full SVG</a>. Follow the electrical labels; module pin order varies.</p>
+<div class="diagram-frame"><svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 1680 1188" role="img" aria-labelledby="title desc">
+<title id="title">LAST LIGHT controller circuit — Arduino Uno R3</title>
+<desc id="desc">Baseline: joystick VCC to 5V, GND to common ground, VRx to A0, VRy to A1, SW to D2 with internal pull-up. Ten kiloohm potentiometer outer terminals to 5V and GND, wiper to A2. USB connects to the local computer. Optional I2C LCD SDA to A4 and SCL to A5. Optional ten separate LED branches use D3 through D12, each with a 2.2 kiloohm resistor before its anode and cathode to common ground. Unknown LED modules stay disconnected and disabled.</desc>
+<defs><style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#172a36}.title{font-size:40px;font-weight:800;letter-spacing:.7px}.h{font-size:25px;font-weight:700}.body{font-size:21px}.small{font-size:18px}.tiny{font-size:16px}.mono{font-family:Consolas,monospace;font-size:21px}.part{fill:#f6f8fa;stroke:#8e9da8;stroke-width:2}.optional{fill:white;stroke:#9a9a91;stroke-width:2;stroke-dasharray:8 5}.wire{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.power{stroke:#bd4036}.gnd{stroke:#344957}.signal{stroke:#1c718f}.switch{stroke:#84549b}.knob{stroke:#a86b20}
+</style>
+<g id="ground"><path d="M0 0v8m-13 0h26m-22 7h18m-14 7h10" fill="none" stroke="#344957" stroke-width="3"/></g>
+<g id="led-branch"><path d="M0 0v12M0 48v14M0 86v28" class="wire signal"/><rect x="-10" y="12" width="20" height="36" fill="white" stroke="#1c718f" stroke-width="3"/><path d="M-12 62H12L0 86Z" fill="none" stroke="#1c718f" stroke-width="3"/><path d="M-13 86H13" stroke="#1c718f" stroke-width="3"/><path d="M15 66L25 56m-7 0h7v7m-5 13L30 66m-7 0h7v7" fill="none" stroke="#1c718f" stroke-width="2"/><circle cx="0" cy="114" r="4.7" fill="#344957"/></g>
+</defs>
+<rect width="1680" height="1188" fill="white"/>
+<text x="60" y="64" class="title">LAST LIGHT / BUILD THE CONTROLLER</text>
+<text x="60" y="103" class="body">UNO R3 · 5 V · USB serial 115200 baud · joystick + LOW / MEDIUM / HIGH knob</text>
+<rect x="60" y="127" width="1560" height="56" rx="7" fill="#fff3de" stroke="#c2903f" stroke-width="1.5"/>
+<text x="79" y="161" class="body" font-weight="700">Unplug USB while wiring. Unknown LED bar: leave it disconnected and keep LED mode 0.</text>
+<text x="60" y="218" class="h">01 / BASIC CONTROLLER</text>
+<text x="1015" y="216" class="small">● Dot = joined wires · crossing without dot = no connection</text>
+
+<!-- Shared supply rails; labelled electrical pins, not a board footprint. -->
+<path d="M430 245H1130V335H1050" class="wire power"/><path d="M460 267H1170V390H1050" class="wire gnd"/>
+<text x="757" y="236" class="small">5V RAIL</text><text x="881" y="259" class="small">COMMON GND</text>
+
+<rect x="60" y="288" width="332" height="326" rx="9" class="part"/>
+<text x="82" y="324" class="h">ANALOG JOYSTICK</text><text x="82" y="352" class="small">Use the printed signal labels.</text>
+<text x="83" y="392" class="mono">VCC / +5V</text><text x="83" y="438" class="mono">GND</text><text x="83" y="484" class="mono">VRx → A0</text><text x="83" y="530" class="mono">VRy → A1</text><text x="83" y="576" class="mono">SW → D2</text>
+<text x="82" y="602" class="tiny">SW closes to GND when pressed.</text>
+<path d="M392 385H430V245" class="wire power"/><path d="M392 431H460V267" class="wire gnd"/>
+<path d="M392 477H740M392 523H740" class="wire signal"/><path d="M392 569H740" class="wire switch"/>
+<circle cx="392" cy="385" r="5" fill="#bd4036"/><circle cx="392" cy="431" r="5" fill="#344957"/><circle cx="392" cy="477" r="5" fill="#1c718f"/><circle cx="392" cy="523" r="5" fill="#1c718f"/><circle cx="392" cy="569" r="5" fill="#84549b"/>
+<text x="499" y="465" class="small">Horizontal signal</text><text x="499" y="511" class="small">Vertical signal</text><text x="499" y="557" class="small">Press / confirm</text>
+
+<rect x="740" y="290" width="310" height="438" rx="12" fill="#edf3f7" stroke="#527589" stroke-width="2.5"/>
+<text x="765" y="328" class="h">UNO R3</text><text x="765" y="358" class="small">ATmega328P · 5 V logic</text>
+<text x="988" y="337" class="mono">5V</text><text x="984" y="394" class="mono">GND</text>
+<text x="756" y="484" class="mono">A0</text><text x="756" y="530" class="mono">A1</text><text x="756" y="576" class="mono">D2</text><text x="801" y="576" class="tiny">INPUT_PULLUP</text><text x="756" y="645" class="mono">A2</text>
+<text x="995" y="468" class="mono">A4</text><text x="995" y="514" class="mono">A5</text>
+<text x="769" y="680" class="small">D3–D12: optional LEDs</text><text x="769" y="706" class="tiny">Leave D0 / D1, VIN, AREF free.</text>
+<rect x="843" y="727" width="105" height="42" fill="#d6dfe5" stroke="#617c8d" stroke-width="2"/><text x="864" y="755" class="small">USB</text>
+<path d="M895 769V812H1125" class="wire signal"/><text x="929" y="800" class="small">USB data cable</text>
+
+<!-- Three-terminal potentiometer divider. Repeated rail labels mean the same net. -->
+<rect x="60" y="653" width="466" height="230" rx="9" class="part"/>
+<text x="82" y="689" class="h">10 kΩ LINEAR POTENTIOMETER</text>
+<path d="M199 720v20" class="wire power"/><path d="M199 808v24" class="wire gnd"/><rect x="187" y="740" width="24" height="68" fill="white" stroke="#344957" stroke-width="3"/>
+<path d="M220 774H615V638H740" class="wire knob"/><path d="M229 767L216 774L229 781" fill="none" stroke="#a86b20" stroke-width="3"/>
+<circle cx="199" cy="720" r="4" fill="#bd4036"/><text x="224" y="726" class="small">Outer → same 5V rail</text><use href="#ground" x="199" y="832"/><text x="224" y="847" class="small">Outer → common GND</text>
+<text x="254" y="763" class="small">Wiper → A2</text><text x="82" y="870" class="tiny">Swap only the two outer pot wires to reverse rotation.</text>
+<text x="632" y="698" class="small">KNOB</text><text x="538" y="815" class="tiny">LOW · MEDIUM · HIGH</text>
+
+<rect x="1250" y="290" width="370" height="267" rx="9" class="optional"/>
+<text x="1273" y="326" class="h">OPTIONAL I2C LCD</text><text x="1273" y="353" class="small">VCC · verified 5 V backpack</text><text x="1273" y="398" class="mono">GND</text><text x="1273" y="469" class="mono">SDA</text><text x="1273" y="515" class="mono">SCL</text><text x="1273" y="545" class="tiny">Default OFF · hd44780 library</text>
+<path d="M1130 335H1250" class="wire power"/><path d="M1170 390H1250" class="wire gnd"/><path d="M1050 461H1250M1050 507H1250" class="wire signal"/>
+<circle cx="1130" cy="335" r="5" fill="#bd4036"/><circle cx="1170" cy="390" r="5" fill="#344957"/>
+<text x="1097" y="449" class="small">A4 / SDA</text><text x="1097" y="495" class="small">A5 / SCL</text>
+
+<rect x="1125" y="618" width="495" height="220" rx="9" class="part"/>
+<text x="1150" y="658" class="h">COMPUTER / LOCAL GAME</text><text x="1150" y="694" class="mono">http://127.0.0.1:3001</text><text x="1150" y="730" class="small">Organizer → Controller → select COM → Connect</text><text x="1150" y="765" class="small">The public Vercel page does not read USB.</text><text x="1150" y="802" class="small">Close Serial Monitor before connecting.</text>
+
+<path d="M60 918H1620" stroke="#b4bdc1" stroke-width="1.5"/>
+<text x="60" y="954" class="h">02 / OPTIONAL TEN-LED RESERVE BAR</text><text x="697" y="953" class="small">Mode 1 · separate LEDs · each resistor 2.2 kΩ, ¼ W · cathodes to GND</text>
+<text x="60" y="981" class="tiny">Not a pinout for an unidentified LED module. A = anode; K = cathode (bar side). One series resistor in every branch.</text>
+<g class="mono" text-anchor="middle"><text x="140" y="1012">D3 / 1</text><text x="293" y="1012">D4 / 2</text><text x="446" y="1012">D5 / 3</text><text x="599" y="1012">D6 / 4</text><text x="752" y="1012">D7 / 5</text><text x="905" y="1012">D8 / 6</text><text x="1058" y="1012">D9 / 7</text><text x="1211" y="1012">D10 / 8</text><text x="1364" y="1012">D11 / 9</text><text x="1517" y="1012">D12 / 10</text></g>
+<g transform="translate(0 1023)"><use href="#led-branch" x="140"/><use href="#led-branch" x="293"/><use href="#led-branch" x="446"/><use href="#led-branch" x="599"/><use href="#led-branch" x="752"/><use href="#led-branch" x="905"/><use href="#led-branch" x="1058"/><use href="#led-branch" x="1211"/><use href="#led-branch" x="1364"/><use href="#led-branch" x="1517"/><path d="M140 114H1560" class="wire gnd"/><use href="#ground" x="1560" y="114"/><text x="83" y="75" class="tiny">A</text><text x="83" y="96" class="tiny">K</text></g>
+<text x="60" y="1174" class="tiny">All GND symbols share one net; all 5V labels share the Uno 5V rail. USB is the only baseline supply. First upload: LED_MODE=0, LCD_ENABLED=0.</text>
+</svg>
+</div>
+</section>
+<p class="footer">Controller kit prepared 13 September 2026. No external fonts, scripts, or images are required to open or print this file. Installation links require internet. Physical hardware testing remains to be completed.</p>
+</main>
+</body>
+</html>

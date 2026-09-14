@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 1680 1188" role="img" aria-labelledby="title desc">
+<title id="title">LAST LIGHT controller circuit — Arduino Uno R3</title>
+<desc id="desc">Baseline: joystick VCC to 5V, GND to common ground, VRx to A0, VRy to A1, SW to D2 with internal pull-up. Ten kiloohm potentiometer outer terminals to 5V and GND, wiper to A2. USB connects to the local computer. Optional I2C LCD SDA to A4 and SCL to A5. Optional ten separate LED branches use D3 through D12, each with a 2.2 kiloohm resistor before its anode and cathode to common ground. Unknown LED modules stay disconnected and disabled.</desc>
+<defs><style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#172a36}.title{font-size:40px;font-weight:800;letter-spacing:.7px}.h{font-size:25px;font-weight:700}.body{font-size:21px}.small{font-size:18px}.tiny{font-size:16px}.mono{font-family:Consolas,monospace;font-size:21px}.part{fill:#f6f8fa;stroke:#8e9da8;stroke-width:2}.optional{fill:white;stroke:#9a9a91;stroke-width:2;stroke-dasharray:8 5}.wire{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.power{stroke:#bd4036}.gnd{stroke:#344957}.signal{stroke:#1c718f}.switch{stroke:#84549b}.knob{stroke:#a86b20}
+</style>
+<g id="ground"><path d="M0 0v8m-13 0h26m-22 7h18m-14 7h10" fill="none" stroke="#344957" stroke-width="3"/></g>
+<g id="led-branch"><path d="M0 0v12M0 48v14M0 86v28" class="wire signal"/><rect x="-10" y="12" width="20" height="36" fill="white" stroke="#1c718f" stroke-width="3"/><path d="M-12 62H12L0 86Z" fill="none" stroke="#1c718f" stroke-width="3"/><path d="M-13 86H13" stroke="#1c718f" stroke-width="3"/><path d="M15 66L25 56m-7 0h7v7m-5 13L30 66m-7 0h7v7" fill="none" stroke="#1c718f" stroke-width="2"/><circle cx="0" cy="114" r="4.7" fill="#344957"/></g>
+</defs>
+<rect width="1680" height="1188" fill="white"/>
+<text x="60" y="64" class="title">LAST LIGHT / BUILD THE CONTROLLER</text>
+<text x="60" y="103" class="body">UNO R3 · 5 V · USB serial 115200 baud · joystick + LOW / MEDIUM / HIGH knob</text>
+<rect x="60" y="127" width="1560" height="56" rx="7" fill="#fff3de" stroke="#c2903f" stroke-width="1.5"/>
+<text x="79" y="161" class="body" font-weight="700">Unplug USB while wiring. Unknown LED bar: leave it disconnected and keep LED mode 0.</text>
+<text x="60" y="218" class="h">01 / BASIC CONTROLLER</text>
+<text x="1015" y="216" class="small">● Dot = joined wires · crossing without dot = no connection</text>
+
+<!-- Shared supply rails; labelled electrical pins, not a board footprint. -->
+<path d="M430 245H1130V335H1050" class="wire power"/><path d="M460 267H1170V390H1050" class="wire gnd"/>
+<text x="757" y="236" class="small">5V RAIL</text><text x="881" y="259" class="small">COMMON GND</text>
+
+<rect x="60" y="288" width="332" height="326" rx="9" class="part"/>
+<text x="82" y="324" class="h">ANALOG JOYSTICK</text><text x="82" y="352" class="small">Use the printed signal labels.</text>
+<text x="83" y="392" class="mono">VCC / +5V</text><text x="83" y="438" class="mono">GND</text><text x="83" y="484" class="mono">VRx → A0</text><text x="83" y="530" class="mono">VRy → A1</text><text x="83" y="576" class="mono">SW → D2</text>
+<text x="82" y="602" class="tiny">SW closes to GND when pressed.</text>
+<path d="M392 385H430V245" class="wire power"/><path d="M392 431H460V267" class="wire gnd"/>
+<path d="M392 477H740M392 523H740" class="wire signal"/><path d="M392 569H740" class="wire switch"/>
+<circle cx="392" cy="385" r="5" fill="#bd4036"/><circle cx="392" cy="431" r="5" fill="#344957"/><circle cx="392" cy="477" r="5" fill="#1c718f"/><circle cx="392" cy="523" r="5" fill="#1c718f"/><circle cx="392" cy="569" r="5" fill="#84549b"/>
+<text x="499" y="465" class="small">Horizontal signal</text><text x="499" y="511" class="small">Vertical signal</text><text x="499" y="557" class="small">Press / confirm</text>
+
+<rect x="740" y="290" width="310" height="438" rx="12" fill="#edf3f7" stroke="#527589" stroke-width="2.5"/>
+<text x="765" y="328" class="h">UNO R3</text><text x="765" y="358" class="small">ATmega328P · 5 V logic</text>
+<text x="988" y="337" class="mono">5V</text><text x="984" y="394" class="mono">GND</text>
+<text x="756" y="484" class="mono">A0</text><text x="756" y="530" class="mono">A1</text><text x="756" y="576" class="mono">D2</text><text x="801" y="576" class="tiny">INPUT_PULLUP</text><text x="756" y="645" class="mono">A2</text>
+<text x="995" y="468" class="mono">A4</text><text x="995" y="514" class="mono">A5</text>
+<text x="769" y="680" class="small">D3–D12: optional LEDs</text><text x="769" y="706" class="tiny">Leave D0 / D1, VIN, AREF free.</text>
+<rect x="843" y="727" width="105" height="42" fill="#d6dfe5" stroke="#617c8d" stroke-width="2"/><text x="864" y="755" class="small">USB</text>
+<path d="M895 769V812H1125" class="wire signal"/><text x="929" y="800" class="small">USB data cable</text>
+
+<!-- Three-terminal potentiometer divider. Repeated rail labels mean the same net. -->
+<rect x="60" y="653" width="466" height="230" rx="9" class="part"/>
+<text x="82" y="689" class="h">10 kΩ LINEAR POTENTIOMETER</text>
+<path d="M199 720v20" class="wire power"/><path d="M199 808v24" class="wire gnd"/><rect x="187" y="740" width="24" height="68" fill="white" stroke="#344957" stroke-width="3"/>
+<path d="M220 774H615V638H740" class="wire knob"/><path d="M229 767L216 774L229 781" fill="none" stroke="#a86b20" stroke-width="3"/>
+<circle cx="199" cy="720" r="4" fill="#bd4036"/><text x="224" y="726" class="small">Outer → same 5V rail</text><use href="#ground" x="199" y="832"/><text x="224" y="847" class="small">Outer → common GND</text>
+<text x="254" y="763" class="small">Wiper → A2</text><text x="82" y="870" class="tiny">Swap only the two outer pot wires to reverse rotation.</text>
+<text x="632" y="698" class="small">KNOB</text><text x="538" y="815" class="tiny">LOW · MEDIUM · HIGH</text>
+
+<rect x="1250" y="290" width="370" height="267" rx="9" class="optional"/>
+<text x="1273" y="326" class="h">OPTIONAL I2C LCD</text><text x="1273" y="353" class="small">VCC · verified 5 V backpack</text><text x="1273" y="398" class="mono">GND</text><text x="1273" y="469" class="mono">SDA</text><text x="1273" y="515" class="mono">SCL</text><text x="1273" y="545" class="tiny">Default OFF · hd44780 library</text>
+<path d="M1130 335H1250" class="wire power"/><path d="M1170 390H1250" class="wire gnd"/><path d="M1050 461H1250M1050 507H1250" class="wire signal"/>
+<circle cx="1130" cy="335" r="5" fill="#bd4036"/><circle cx="1170" cy="390" r="5" fill="#344957"/>
+<text x="1097" y="449" class="small">A4 / SDA</text><text x="1097" y="495" class="small">A5 / SCL</text>
+
+<rect x="1125" y="618" width="495" height="220" rx="9" class="part"/>
+<text x="1150" y="658" class="h">COMPUTER / LOCAL GAME</text><text x="1150" y="694" class="mono">http://127.0.0.1:3001</text><text x="1150" y="730" class="small">Organizer → Controller → select COM → Connect</text><text x="1150" y="765" class="small">The public Vercel page does not read USB.</text><text x="1150" y="802" class="small">Close Serial Monitor before connecting.</text>
+
+<path d="M60 918H1620" stroke="#b4bdc1" stroke-width="1.5"/>
+<text x="60" y="954" class="h">02 / OPTIONAL TEN-LED RESERVE BAR</text><text x="697" y="953" class="small">Mode 1 · separate LEDs · each resistor 2.2 kΩ, ¼ W · cathodes to GND</text>
+<text x="60" y="981" class="tiny">Not a pinout for an unidentified LED module. A = anode; K = cathode (bar side). One series resistor in every branch.</text>
+<g class="mono" text-anchor="middle"><text x="140" y="1012">D3 / 1</text><text x="293" y="1012">D4 / 2</text><text x="446" y="1012">D5 / 3</text><text x="599" y="1012">D6 / 4</text><text x="752" y="1012">D7 / 5</text><text x="905" y="1012">D8 / 6</text><text x="1058" y="1012">D9 / 7</text><text x="1211" y="1012">D10 / 8</text><text x="1364" y="1012">D11 / 9</text><text x="1517" y="1012">D12 / 10</text></g>
+<g transform="translate(0 1023)"><use href="#led-branch" x="140"/><use href="#led-branch" x="293"/><use href="#led-branch" x="446"/><use href="#led-branch" x="599"/><use href="#led-branch" x="752"/><use href="#led-branch" x="905"/><use href="#led-branch" x="1058"/><use href="#led-branch" x="1211"/><use href="#led-branch" x="1364"/><use href="#led-branch" x="1517"/><path d="M140 114H1560" class="wire gnd"/><use href="#ground" x="1560" y="114"/><text x="83" y="75" class="tiny">A</text><text x="83" y="96" class="tiny">K</text></g>
+<text x="60" y="1174" class="tiny">All GND symbols share one net; all 5V labels share the Uno 5V rail. USB is the only baseline supply. First upload: LED_MODE=0, LCD_ENABLED=0.</text>
+</svg>

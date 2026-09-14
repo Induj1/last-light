@@ -1,0 +1,108 @@
+.hosted-login-dialog {
+  width: min(500px, 100%);
+}
+.hosted-login-dialog h2 {
+  font-size: 35px;
+}
+.hosted-login-dialog .dialog-intro {
+  max-width: 395px;
+  line-height: 1.65;
+}
+.hosted-login-form {
+  margin-top: 25px;
+}
+.hosted-login-form > label {
+  display: block;
+  margin-bottom: 9px;
+  color: #b6b8bb;
+  font:
+    10px Consolas,
+    monospace;
+  letter-spacing: 1px;
+}
+.hosted-password-field {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0 13px;
+  background: #16191e;
+  border: 1px solid #595b5e;
+  border-radius: 7px;
+  color: #9ea0a3;
+}
+.hosted-password-field:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.hosted-password-field input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  min-width: 0;
+  padding: 14px 0;
+  background: transparent;
+  color: #eaecef;
+  font:
+    14px Arial,
+    sans-serif;
+}
+.hosted-password-field input::placeholder {
+  color: #7e8083;
+}
+.hosted-login-form > .primary-button {
+  width: 100%;
+  justify-content: center;
+  margin-top: 17px;
+  min-height: 43px;
+}
+.hosted-login-error {
+  color: #efb3a0;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+.hosted-login-note {
+  margin: 20px 0 0;
+  color: #919396;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.hosted-public-note {
+  color: #b4b6b9;
+  font-size: 11px;
+  line-height: 1.55;
+  margin: 10px 0 0;
+}
+.hosted-admin-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 13px;
+  margin-bottom: 18px;
+  border: 1px solid #4e5053;
+  border-radius: 7px;
+  background: #23262b;
+}
+.hosted-admin-bar span {
+  color: #c6c8cb;
+  font:
+    10px Consolas,
+    monospace;
+  letter-spacing: 0.5px;
+}
+.hosted-admin-bar .text-button {
+  font-size: 11px;
+  min-height: 30px;
+}
+@media (max-width: 550px) {
+  .hosted-login-dialog h2 {
+    font-size: 29px;
+  }
+  .hosted-admin-bar {
+    gap: 10px;
+  }
+  .hosted-admin-bar span {
+    font-size: 9px;
+  }
+}

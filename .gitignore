@@ -1,0 +1,18 @@
+# Dependencies and generated builds
+node_modules/
+dist/
+
+# Local player data, checks, and credentials
+data/
+test-results/
+*.log
+.env*
+.railway/
+.vercel/
+
+# Local agent configuration and unrelated workspace projects
+/.agents/
+/.codex/
+/.openai/
+/skills-lock.json
+/portfolio/

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 1400 990" role="img" aria-labelledby="title description">
+<title id="title">LAST LIGHT printable exhibition control labels</title>
+<desc id="description">Cut-out labels for select building joystick, grid power knob with three LOW, MEDIUM, and HIGH modes, grid storage display, colour legend, and educational game message.</desc>
+<defs><style>text{font-family:Arial,Helvetica,sans-serif;fill:#122c34;text-anchor:middle}.small{font-size:21px;font-weight:700;letter-spacing:3px}.big{font-size:63px;font-weight:900;letter-spacing:2px}.mid{font-size:28px;font-weight:700}.cut{fill:#fff;stroke:#819299;stroke-width:1.5;stroke-dasharray:8 7}</style></defs>
+<rect width="1400" height="990" fill="white"/>
+<text x="700" y="32" style="font-size:17px;fill:#52656e">LAST LIGHT / EXHIBITION LABELS · PRINT LANDSCAPE · CUT ON DASHED LINES</text>
+<rect x="25" y="55" width="665" height="245" rx="12" class="cut"/>
+<text x="357" y="100" class="small">01 / JOYSTICK</text>
+<text x="357" y="170" class="big" style="font-size:52px">SELECT BUILDING</text>
+<path d="M315 233H400M357 196V272M315 233L331 218M315 233L331 248M400 233L384 218M400 233L384 248M357 196L342 212M357 196L372 212M357 272L342 256M357 272L372 256" fill="none" stroke="#187c6e" stroke-width="7" stroke-linecap="round"/>
+<rect x="710" y="55" width="665" height="245" rx="12" class="cut"/>
+<text x="1042" y="100" class="small">03 / RESERVE</text>
+<text x="1042" y="170" class="big" style="font-size:57px">GRID STORAGE</text>
+<g fill="#16725e"><rect x="792" y="207" width="35" height="33"/><rect x="836" y="207" width="35" height="33"/><rect x="880" y="207" width="35" height="33"/><rect x="924" y="207" width="35" height="33"/><rect x="968" y="207" width="35" height="33"/><rect x="1012" y="207" width="35" height="33"/><rect x="1056" y="207" width="35" height="33"/></g>
+<g fill="#dde7e7"><rect x="1100" y="207" width="35" height="33"/><rect x="1144" y="207" width="35" height="33"/><rect x="1188" y="207" width="35" height="33"/><rect x="1232" y="207" width="35" height="33"/></g>
+<text x="1042" y="276" style="font-size:23px">KEEP SOME LIGHT FOR THE LAST SECOND</text>
+
+<rect x="25" y="320" width="1350" height="288" rx="12" class="cut"/>
+<text x="700" y="369" class="small">02 / TURN THE KNOB</text>
+<text x="700" y="442" class="big" style="font-size:76px">GRID POWER</text>
+<path d="M280 491H1120" stroke="#37585f" stroke-width="5"/><g stroke="#37585f" stroke-width="5"><path d="M280 476V506M700 476V506M1120 476V506"/></g>
+<text x="280" y="551" class="mid" style="fill:#087346">LOW</text><text x="700" y="551" class="mid" style="fill:#9b5700">MEDIUM</text><text x="1120" y="551" class="mid" style="fill:#b13229">HIGH</text>
+<text x="700" y="588" style="font-size:20px">MATCH THE BUILDING'S POWER. EXTRA POWER USES EXTRA STORAGE.</text>
+
+<rect x="25" y="628" width="1350" height="174" rx="12" class="cut"/>
+<text x="700" y="671" class="small">FLASHING COLOUR = POWER NEEDED</text>
+<circle cx="119" cy="738" r="22" fill="#18945c"/><text x="304" y="749" class="mid">GREEN = LOW</text>
+<circle cx="525" cy="738" r="22" fill="#da850d"/><text x="740" y="749" class="mid">ORANGE = MEDIUM</text>
+<circle cx="1006" cy="738" r="22" fill="#d64236"/><text x="1190" y="749" class="mid">RED = HIGH</text>
+
+<rect x="25" y="822" width="1350" height="143" rx="12" class="cut"/>
+<text x="700" y="869" class="small">SDG 7 / AFFORDABLE AND CLEAN ENERGY · SDG 11 / SUSTAINABLE CITIES</text>
+<text x="700" y="922" style="font-size:31px;font-weight:900">WHEN ENERGY IS LIMITED, EVERY DECISION HAS A COST.</text>
+</svg>
